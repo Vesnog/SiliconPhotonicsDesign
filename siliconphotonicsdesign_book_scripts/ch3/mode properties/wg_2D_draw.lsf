@@ -54,14 +54,14 @@ set("y", 0);        set("y span", width_ridge);
 set("z min", 0);    set("z max", thick_Si);
 set("x min", Xmin); set("x max", Xmax);
 
-# draw slab for rib waveguides
-addrect; set("name", "slab"); set("material",material_Si);
-if (thick_Slab==0) {
- set("y min", 0);     set("y max", 0);
-} else { 
- set("y", 0);         set("y span", Y_span+1e-6);
-}
-set("z min", 0);      set("z max", thick_Slab);
-set("x min", Xmin);   set("x max", Xmax);
-set("alpha", 0.2);
+## draw slab for rib waveguides
+#addrect; set("name", "slab"); set("material",material_Si);
+#if (thick_Slab==0) {
+ #set("y min", 0);     set("y max", 0);
+#} else { 
+ #set("y", 0);         set("y span", Y_span+1e-6);
+#}
+#set("z min", 0);      set("z max", thick_Slab);
+#set("x min", Xmin);   set("x max", Xmax);
+#set("alpha", 0.2);
 
