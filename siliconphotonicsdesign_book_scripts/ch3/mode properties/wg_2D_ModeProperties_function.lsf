@@ -71,8 +71,8 @@ confinement = integrate(Wc,1:2,y,z);
 ?"Confinement factor (Energy density): " +num2str(confinement); 
 
 # Plot total energy density and confined profiles
-image(y*1e9,z*1e9,W/max(W),'y [nm]','z [nm]','W');
-image(y*1e9,z*1e9,Wc/max(W),'y [nm]','z [nm]','W core');
+#image(y*1e9,z*1e9,W/max(W),'y [nm]','z [nm]','W');
+#image(y*1e9,z*1e9,Wc/max(W),'y [nm]','z [nm]','W core');
 
 
 ##########################################################################################
@@ -111,6 +111,6 @@ confinement = integrate(EC2,1:2,y,z);
 ?"Confinement factor (E-Field intensity): " +num2str(confinement); 
 
 # Plot total E-field intensity and confined intensity profiles
-image(y*1e9,z*1e9,E2/max(E2),'y [nm]','z [nm]','E-field intensity');
-image(y*1e9,z*1e9,EC2/max(E2),'y [nm]','z [nm]','E-field intensity inside core');
+#image(y*1e9,z*1e9,E2/max(E2),'y [nm]','z [nm]','E-field intensity');
+#image(y*1e9,z*1e9,EC2/max(E2),'y [nm]','z [nm]','E-field intensity inside core');
 

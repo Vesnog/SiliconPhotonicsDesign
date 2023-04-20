@@ -19,7 +19,7 @@ modeNum       = 1;           # modes to solve for
 # add 2D mode solver (waveguide cross-section)
 addfde;  set("solver type", "2D X normal");
 set("x", 0);  
-set("y", 0);         set("y span", Y_span);
+set("y", 0);         set("y span", 2 * Y_span);
 set("z max", Zmax);  set("z min", Zmin);
 set("wavelength", wavelength);   set("solver type","2D X normal");
 set("define y mesh by","maximum mesh step"); set("dy", meshsize);
@@ -29,7 +29,7 @@ set("number of trial modes",modeNum);
 
 
 
-wg_widths = (100:20:500)*1e-9;
+wg_widths = [100, 500, 1000, 2000]*1e-9;
 
 L=length(wg_widths);
 T=matrix(3,L);
