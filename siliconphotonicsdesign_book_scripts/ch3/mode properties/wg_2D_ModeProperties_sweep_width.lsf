@@ -29,7 +29,7 @@ set("number of trial modes",modeNum);
 
 
 
-wg_widths = (100:100:500)*1e-9;
+wg_widths = (100:20:500)*1e-9;
 
 L=length(wg_widths);
 T=matrix(3,L);
