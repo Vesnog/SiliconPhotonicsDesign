@@ -4,7 +4,7 @@
 
 # Example with default parameters requires 1.2 GB ram.
 
-radii= [0,30, 35, 40]*1e-6;
+radii= [0, 3, 5]*1e-6;
 # min radius as defined in: 
 # http://docs.lumerical.com/en/solvers_finite_difference_eigenmode_bend.html
 wg_2D_draw;   # run script to draw the waveguide
@@ -46,8 +46,8 @@ for (i=1:n) {
 		setanalysis ('bend radius', radii(i));
 	}
 	setanalysis ('number of trial modes', 4); 
-	setanalysis ('use max index', 0);
-	setanalysis ('n', 1.77);
+	setanalysis ('use max index', 1);
+	#setanalysis ('n', 1.77);
 	nn = findmodes;
 	if (nn>0) {
 		Neff(i) = getdata('FDE::data::mode1','neff'); 
