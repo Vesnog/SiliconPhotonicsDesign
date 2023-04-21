@@ -1,0 +1,72 @@
+# bend_MODE_TE_Convergence.lsf: script to:
+# 1) calculate the mode profile in a waveguide with varying bend radius 
+# 2) calculate mode mismatch loss with straight waveguide 
+# 3) Convergence test
+
+# Example with default parameters requires 1.2 GB ram.
+
+radii= [0, 5]*1e-6;            # for (2) mismatch
+ZSpanMatrix = [0.6:0.2:3]*1e-6;  # for (3) convergence test
+
+# min radius as defined in: 
+# http://docs.lumerical.com/en/solvers_finite_difference_eigenmode_bend.html
+wg_2D_draw;   # run script to draw the waveguide
+
+# define simulation parameters
+wavelength    = 1.55e-6;   
+# maximum mesh size; 40 gives reasonable results
+meshsize      = 10e-9;       
+modes         = 1;           # modes to output
+
+# add 2D mode solver (waveguide cross-section)
+addfde;  set("solver type", "2D X normal");
+set("x", 0);  
+width_margin  = 2e-6;	# ensure it is big enough to accurately measure radiation loss via PMLs
+height_margin = 0.5e-6;  
+Zmin = -height_margin;  Zmax = thick_Si + height_margin;
+set('z max', Zmax);  set('z min', Zmin);
+Y_span = 2*width_margin + width_ridge; 
+Ymin = -Y_span/2;  Ymax = -Ymin;
+set('y',0);  set('y span', Y_span);
+set("wavelength", wavelength);   set("solver type","2D X normal");
+set("y min bc","PML"); set("y max bc","PML"); # radiation loss
+set("z min bc","metal"); set("z max bc","metal");  # faster
+set("define y mesh by","maximum mesh step"); 
+set("dy", meshsize);
+set("define z mesh by","maximum mesh step"); 
+set("dz", meshsize);
+set("number of trial modes",modes);
+
+# solve modes in the waveguide:
+
+n=length(ZSpanMatrix);  power_coupling=matrix(n); 
+for (k=1:n) {
+	cleardcard;  # Clears all the global d-cards.
+	for (i=1:2) {
+		if (i==1) { # Straight waveguide
+			switchtolayout;
+			select("FDE");
+			set('z span',ZSpanMatrix(k)); 
+			setanalysis ('bent waveguide', 0); # Cartesian
+		} else {    # Bent waveguide
+			setanalysis ('bent waveguide', 1); # cylindrical 
+			setanalysis ('bend radius', radii(i));
+		}
+		nn = findmodes;
+		if (nn>0) {
+			copydcard( 'mode1', 'radius' + num2str(radii(i)*1e6) );
+
+			# Perform mode-overlap calculations between the straight and bent waveguides 
+			if (radii(i)>0) {
+				out = overlap('::radius0','::radius'+ num2str(radii(i)*1e6)); 
+				?out(2);
+				power_coupling(k)=out(2); # power coupling
+			}
+
+		}
+	}
+}
+
+plot ( ZSpanMatrix*1e6, power_coupling, "Z-Span [micron]", "Power Coupling", "Convergence test for TE bend mode-mismatch loss", "plot points");
+legend ('Power Coupling');
+
