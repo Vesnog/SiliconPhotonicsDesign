@@ -4,7 +4,7 @@
 
 # Example with default parameters requires 1.2 GB ram.
 
-radii= [0, 9, 10, 11]*1e-6;
+radii= [0,30, 35, 40]*1e-6;
 # min radius as defined in: 
 # http://docs.lumerical.com/en/solvers_finite_difference_eigenmode_bend.html
 wg_2D_draw;   # run script to draw the waveguide
