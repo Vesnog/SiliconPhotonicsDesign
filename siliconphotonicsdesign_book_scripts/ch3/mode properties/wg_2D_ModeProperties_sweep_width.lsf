@@ -7,7 +7,7 @@
 # - Optical confinement factor (based on E-field intensity)
 
 
-
+clear; clc;
 
 wg_2D_draw;   # run script to draw the waveguide
 
@@ -35,15 +35,17 @@ L=length(wg_widths);
 T=matrix(3,L);
 for(ii=1:L)
 {
-    switchtolayout;
-    select('waveguide');
-    set('y min', -wg_widths(ii)/2);
-    set('y max', wg_widths(ii)/2);
+	width_ridge = wg_widths(ii);
+	switchtolayout;
+	select('waveguide');
+	set("y span", width_ridge);
     switchtolayout;
     wg_2D_ModeProperties_function; # run the script to perform the simulation
     T(1, ii) = modalarea1*1e12;
     T(2, ii) = confinement;
     T(3, ii) = wg_widths(ii);
 }
-
-
+modalArea = T(1, :);
+confinement = T(2, :);
+plot(wg_widths * 1.0e9, modalArea);
+plot(wg_widths * 1.0e9, confinement);
