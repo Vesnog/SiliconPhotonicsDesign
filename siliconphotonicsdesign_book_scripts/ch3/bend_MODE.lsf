@@ -4,7 +4,7 @@
 
 # Example with default parameters requires 1.2 GB ram.
 
-radii= [0, 100, 50, 30, 20, 10, 5, 4, 3]*1e-6;
+radii= [0, 11, 10.5, 10, 9.5, 9, 8.5]*1e-6;
 # min radius as defined in: 
 # http://docs.lumerical.com/en/solvers_finite_difference_eigenmode_bend.html
 wg_2D_draw;   # run script to draw the waveguide
@@ -63,7 +63,7 @@ for (i=1:n) {
 		E3=pinch(getelectric('FDE::data::mode1')); y=getdata('FDE::data::mode1','y'); z=getdata('FDE::data::mode1','z'); 
 		image(y,z,E3); 
 		exportfigure('out/bend_mode_profile_radius'+ num2str(radii(i))); 
-		matlabsave('out/bend_mode_profile_radius'+ num2str(radii(i)), y,z,E3);
+		#matlabsave('out/bend_mode_profile_radius'+ num2str(radii(i)), y,z,E3);
 	}
 }
 PropagationLoss=2 *100; # dB/cm *100 --- dB/m
